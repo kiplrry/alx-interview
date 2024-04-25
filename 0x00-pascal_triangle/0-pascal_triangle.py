@@ -11,10 +11,12 @@ def pascal_triangle(n):
     Returns an empty list if n <= 0
     You can assume n will be always an integer
     """
+    if not isinstance(n, int):
+        return
     if n <= 0:
         return []
     if n == 1:
-        return [1]
+        return [[1]]
     arr = []
     prev_arr = [1]
     for i in range(1, n+1):
