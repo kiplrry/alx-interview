@@ -16,7 +16,7 @@ def minOperations(n: int) -> int:
     Returns an integer
     If n is impossible to achieve, return 0
     """
-    if n <= 0 or not isinstance(int):
+    if n <= 0 or not isinstance(n, int):
         return 0
     lst = []
     num = n
