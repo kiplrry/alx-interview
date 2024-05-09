@@ -18,7 +18,7 @@ def minOperations(n: int) -> int:
     """
     if n <= 1 or not isinstance(n, int):
         return 0
-    
+
     lst = []
     num = n
     while True:
