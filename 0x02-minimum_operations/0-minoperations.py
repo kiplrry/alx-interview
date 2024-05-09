@@ -9,6 +9,7 @@ n H characters in the file.
 """
 from typing import List, Tuple
 
+
 def minOperations(n: int) -> int:
     """
     Prototype: def minOperations(n)
@@ -28,6 +29,7 @@ def minOperations(n: int) -> int:
     lst = [num - 1 for num in lst]
     num = sum(lst) + len(lst)
     return num
+
 
 def getfact(n: int) -> Tuple[int, int]:
     """
