@@ -1,64 +1,37 @@
 #!/usr/bin/python3
-"""
-Module to work on stdin stats
-"""
-import re
+"""script that reads stdin line by line and computes metrics"""
 import sys
 
 
-def regex_gen(line):
-    """function to return code and size"""
-    pattern = (
-        r'^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'     # IP Address
-        r' - \[([^\]]+)\]'                           # Date
-        r' "GET /projects/260 HTTP/1\.1"'            # Request
-        r' (\d{3})'                                  # Status Code
-        r' (\d+)$'                                   # File Size
-    )
+if __name__ == '__main__':
 
-    # Compile the pattern
-    regex = re.compile(pattern)
+    filesize, count = 0, 0
+    codes = ["200", "301", "400", "401", "403", "404", "405", "500"]
+    stats = {k: 0 for k in codes}
 
-    # Match the pattern with the log line
-    match = regex.match(line)
-    if match:
-        code = match.group(3)
-        size = match.group(4)
-        return (code, size)
-    return (None, None)
+    def print_stats(stats: dict, file_size: int) -> None:
+        print("File size: {:d}".format(filesize))
+        for k, v in sorted(stats.items()):
+            if v:
+                print("{}: {}".format(k, v))
 
-
-def main():
-    """Main function"""
-    count = 0
-    total_size = 0
-    statuses = {
-        "200": 0,
-        "301": 0,
-        "400": 0,
-        "401": 0,
-        "403": 0,
-        "404": 0,
-        "405": 0,
-        "500": 0
-    }
-    while True:
-        try:
-            line = sys.stdin.readline()
-            code, size = regex_gen(line)
-            if not code or not size or code not in statuses:
-                continue
+    try:
+        for line in sys.stdin:
             count += 1
-            total_size += int(size)
-            statuses[code] += 1
-            if count == 10:
-                print(f"File size: {total_size}")
-                for code, num in statuses.items():
-                    print(f"{code}: {num}")
-                count = 0
-        except KeyboardInterrupt:
-            pass
-
-
-if __name__ == "__main__":
-    main()
+            data = line.split()
+            try:
+                status_code = data[-2]
+                if status_code in stats:
+                    stats[status_code] += 1
+            except BaseException:
+                pass
+            try:
+                filesize += int(data[-1])
+            except BaseException:
+                pass
+            if count % 10 == 0:
+                print_stats(stats, filesize)
+        print_stats(stats, filesize)
+    except KeyboardInterrupt:
+        print_stats(stats, filesize)
+        raise
