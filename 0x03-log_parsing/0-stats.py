@@ -4,7 +4,6 @@ Module to work on stdin stats
 """
 import re
 import sys
-sys.stdin
 
 
 def regex_gen(line):
