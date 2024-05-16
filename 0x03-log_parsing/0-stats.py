@@ -8,7 +8,13 @@ import sys
 
 def regex_gen(line):
     """function to return code and size"""
-    pattern = r'^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) - \[([^\]]+)\] "GET /projects/260 HTTP/1\.1" (\d{3}) (\d+)$'
+    pattern = (
+        r'^(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'     # IP Address
+        r' - \[([^\]]+)\]'                           # Date
+        r' "GET /projects/260 HTTP/1\.1"'            # Request
+        r' (\d{3})'                                  # Status Code
+        r' (\d+)$'                                   # File Size
+    )
 
     # Compile the pattern
     regex = re.compile(pattern)
