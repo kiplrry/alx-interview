@@ -5,9 +5,9 @@ const request = util.promisify(require('request'));
 const filmId = process.argv[2];
 
 async function fetchStarWarsCharacters(id) {
-  const filmEndpoint = 'https://swapi-api.hbtn.io/api/films/' + id;
+  const filmUrl = 'https://swapi-api.hbtn.io/api/films/' + id;
   try {
-    const filmResponse = await request(filmEndpoint);
+    const filmResponse = await request(filmUrl);
     const filmData = JSON.parse(filmResponse.body);
     const characters = filmData.characters;
 
