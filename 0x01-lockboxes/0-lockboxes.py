@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """lockboxes
 """
 
@@ -17,7 +17,7 @@ def canUnlockAll(boxes: list[list]):
     while True:
         for key in (set(allBoxes) & oldkeys):
             if key != 0:
-                allBoxes.remove(key) 
+                allBoxes.remove(key)
                 newkeys.update(boxes[key])
         if len(allBoxes) == 0:
             return True
