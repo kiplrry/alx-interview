@@ -1,16 +1,14 @@
 #!/usr/bin/python3
-"""lockboxes module
-
+"""
+   method that determines if all the boxes can be opened
+   if an n number of locked boxes, Each box numbered sequentially
+   0 to n - 1 and each box may contain keys to the other boxes.
 """
 
-
-def canUnlockAll(boxes: list[list]) -> bool:
-    """CanUnlock
-
-    :param boxes: list of boxes with keys
-    :type boxes: list[list]
-    :return: bool
-    :rtype: bool
+def canUnlockAll(boxes):
+    """
+        Parameter: boxes
+        Return: True or False
     """
     if not boxes[0] and len(boxes) > 1:
         return False
