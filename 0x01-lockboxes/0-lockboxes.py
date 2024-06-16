@@ -1,10 +1,16 @@
 #!/usr/bin/python3
 """lockboxes module
+
 """
 
 
-def canUnlockAll(boxes: list[list]):
-    """can unlock all boxes
+def canUnlockAll(boxes: list[list]) -> bool:
+    """CanUnlock
+
+    :param boxes: list of boxes with keys
+    :type boxes: list[list]
+    :return: bool
+    :rtype: bool
     """
     if not boxes[0] and len(boxes) > 1:
         return False
