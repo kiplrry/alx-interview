@@ -4,7 +4,8 @@
 
 
 def canUnlockAll(boxes: list[list]):
-    """can unlock all boxes"""
+    """can unlock all boxes
+    """
     if not boxes[0] and len(boxes) > 1:
         return False
 
