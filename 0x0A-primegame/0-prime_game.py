@@ -1,48 +1,57 @@
 #!/usr/bin/python3
 """
-Prime game module
+Module for solving the prime game question.
 """
 
 
-def prime(n):
-    """gives a number of the prime numbers"""
-    primes = list(range(2, n+1))
-    for _num in primes:
-        for num in range(_num + 1, n + 1):
-            if not num % _num:
-                try:
-                    primes.remove(num)
-                except ValueError:
-                    pass
-    return len(primes)
-
-
 def isWinner(x, nums):
-    """determines winner
-
-    :param x: number of rounds
-    :type x: int
-    :param nums: list of numbers
-    :type nums: list[int]
-    :return: name of winner
-    :rtype: str | None
     """
-    pl = {'Ben': 0, 'Maria': 0}
-    if x > len(nums):
+    Function that checks for the winner.
+
+    Args:
+        x (int): The number of rounds.
+        nums (list): List of integers representing n for each round.
+
+    Returns:
+        str or None
+    """
+
+    # Check for invalid inputs
+    if not nums or x < 1:
         return None
-    i = 0
-    while i < x:
-        if nums[i] < 2:
-            pl['Ben'] += 1
-            i += 1
+
+    # Find the maximum number in the nums list
+    max_num = max(nums)
+
+    # Create a boolean list to mark prime numbers
+    is_prime = [True for _ in range(max(max_num + 1, 2))]
+
+    # Perform the prime sieve algorithm
+    for i in range(2, int(pow(max_num, 0.5)) + 1):
+        if not is_prime[i]:
             continue
-        num = prime(nums[i])
-        if num % 2:
-            pl['Maria'] += 1
-        else:
-            pl['Ben'] += 1
-        i += 1
-    if pl['Maria'] == pl['Ben']:
+        for j in range(i * i, max_num + 1, i):
+            is_prime[j] = False
+
+    # Mark 0 and 1 as non-prime
+    is_prime[0] = is_prime[1] = False
+
+    # Calculate the cumulative count of prime numbers encountered
+    prime_count = [0 for _ in range(len(is_prime))]
+    count = 0
+    for i in range(len(is_prime)):
+        if is_prime[i]:
+            count += 1
+        prime_count[i] = count
+
+    # Count the number of wins for Maria
+    maria_wins = 0
+    for num in nums:
+        maria_wins += prime_count[num] % 2 == 1
+
+    # Determine the winner based on the number of wins
+    if maria_wins * 2 == len(nums):
         return None
-    res = 'Ben' if pl['Ben'] > pl['Maria'] else 'Maria'
-    return res
+    if maria_wins * 2 > len(nums):
+        return "Maria"
+    return "Ben"
