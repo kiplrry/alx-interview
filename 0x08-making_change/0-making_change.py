@@ -20,4 +20,4 @@ def makeChange(coins, total):
         total -= (coin_multiplier * coin)
     if total != 0:
         return -1
-    return coin_count
+    return coin_count
